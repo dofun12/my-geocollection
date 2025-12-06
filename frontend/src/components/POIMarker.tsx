@@ -12,11 +12,21 @@ interface POIMarkerProps {
     onUnsetAsHome: (id: number) => void;
 }
 
-// Create custom marker icon
-const customIcon = new Icon({
+// Create custom marker icon (Blue)
+const defaultIcon = new Icon({
     iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
     iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
     shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+});
+
+// Create home marker icon (Green)
+const homeIcon = new Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -36,7 +46,7 @@ const POIMarker: React.FC<POIMarkerProps> = ({ poi, onEdit, onDelete }) => {
     return (
         <Marker
             position={[poi.latitude, poi.longitude]}
-            icon={customIcon}
+            icon={poi.isHome ? homeIcon : defaultIcon}
         >
             <Popup maxWidth={300} className="poi-popup">
                 <div className="space-y-3">
