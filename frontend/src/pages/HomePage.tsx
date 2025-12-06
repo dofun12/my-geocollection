@@ -184,7 +184,8 @@ export default function HomePage() {
                 isOpen={isModalOpen}
                 mode={modalMode}
                 poi={selectedPOI}
-                coords={clickedCoords}
+                initialLat={clickedCoords?.lat}
+                initialLon={clickedCoords?.lon}
                 onClose={handleCloseModal}
                 onSubmit={handleModalSubmit}
             />
