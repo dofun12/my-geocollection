@@ -86,43 +86,47 @@ function App() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-gray-100">
       {/* Header */}
-      <header className="absolute top-0 left-0 right-0 z-[1000] bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <MapPin size={32} className="drop-shadow-lg" />
-            <div>
-              <h1 className="text-2xl font-bold">My Geo Collection</h1>
-              <p className="text-xs text-blue-100">Manage your Points of Interest</p>
+      {!isModalOpen && (
+        <header className="absolute top-0 left-0 right-0 z-[1000] bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
+          <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <MapPin size={32} className="drop-shadow-lg" />
+              <div>
+                <h1 className="text-2xl font-bold">My Geo Collection</h1>
+                <p className="text-xs text-blue-100">Manage your Points of Interest</p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-4">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-semibold">{pois.length} POIs</p>
-              <p className="text-xs text-blue-100">Total locations</p>
+            <div className="flex items-center gap-4">
+              <div className="text-right hidden sm:block">
+                <p className="text-sm font-semibold">{pois.length} POIs</p>
+                <p className="text-xs text-blue-100">Total locations</p>
+              </div>
+              <button
+                onClick={handleAddNewClick}
+                className="flex items-center gap-2 px-5 py-2.5 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-all hover:shadow-xl font-semibold"
+              >
+                <Plus size={20} />
+                <span className="hidden sm:inline">Add New POI</span>
+                <span className="sm:hidden">Add</span>
+              </button>
             </div>
-            <button
-              onClick={handleAddNewClick}
-              className="flex items-center gap-2 px-5 py-2.5 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-all hover:shadow-xl font-semibold"
-            >
-              <Plus size={20} />
-              <span className="hidden sm:inline">Add New POI</span>
-              <span className="sm:hidden">Add</span>
-            </button>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Instructions Banner */}
-      <div className="absolute top-20 left-0 right-0 z-[999] pointer-events-none">
-        <div className="max-w-xl mx-auto px-4 pointer-events-auto">
-          <div className="bg-blue-50 border border-blue-200 text-blue-800 px-6 py-3 rounded-lg shadow-lg">
-            <p className="text-sm text-center">
-              <strong>💡 Tip:</strong> Click anywhere on the map to add a new POI at that location!
-            </p>
+      {!isModalOpen && (
+        <div className="absolute top-20 left-0 right-0 z-[999] pointer-events-none">
+          <div className="max-w-lg mx-auto px-4 pointer-events-auto">
+            <div className="bg-blue-50/90 border border-blue-200 text-blue-700 px-4 py-2 rounded-md shadow-sm">
+              <p className="text-xs text-center">
+                <strong>💡 Tip:</strong> Click on the map to add a POI
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Loading Overlay */}
       {isLoading && (
