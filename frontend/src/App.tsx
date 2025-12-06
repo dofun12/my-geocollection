@@ -3,7 +3,7 @@ import { MapPin, Plus, Loader } from 'lucide-react';
 import MapComponent from './components/MapComponent';
 import POIModal from './components/POIModal';
 import { poiApi } from './services/api';
-import { POI, CreatePOIRequest, UpdatePOIRequest } from './types/types';
+import type { POI, CreatePOIRequest, UpdatePOIRequest } from './types/types';
 import './index.css';
 
 function App() {

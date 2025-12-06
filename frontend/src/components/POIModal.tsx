@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { POI, CreatePOIRequest, UpdatePOIRequest } from '../types/types';
+import type { POI, CreatePOIRequest, UpdatePOIRequest } from '../types/types';
 import { fileToBase64, validateImageFile } from '../services/api';
 import AddressAutocomplete from './AddressAutocomplete';
 

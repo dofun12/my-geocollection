@@ -2,7 +2,7 @@ import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { Edit, Trash2 } from 'lucide-react';
-import { POI } from '../types/types';
+import type { POI } from '../types/types';
 
 interface POIMarkerProps {
     poi: POI;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { nominatimApi, NominatimResult } from '../services/api';
+import { nominatimApi, type NominatimResult } from '../services/api';
 
 interface AddressAutocompleteProps {
     onLocationSelect: (lat: number, lon: number, address: string) => void;

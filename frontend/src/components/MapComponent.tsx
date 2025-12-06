@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import { LatLng } from 'leaflet';
-import { POI, MapState } from '../types/types';
+import type { POI, MapState } from '../types/types';
 import POIMarker from './POIMarker';
 
 interface MapComponentProps {

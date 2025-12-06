@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { POI, CreatePOIRequest, UpdatePOIRequest, NominatimResult } from '../types/types';
+import type { POI, CreatePOIRequest, UpdatePOIRequest, NominatimResult } from '../types/types';
+
+// Re-export types for convenience
+export type { NominatimResult };
 
 /**
  * Base URL for API requests.
