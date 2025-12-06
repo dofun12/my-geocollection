@@ -88,11 +88,12 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     const searchAddress = async (searchQuery: string) => {
         setIsLoading(true);
         try {
-            const response = await axios.get<PhotonResponse>('https://photon.komoot.io/api/', {
+            const apiUrl = import.meta.env.VITE_PHOTON_API_URL || 'https://photon.komoot.io/api/';
+            const response = await axios.get<PhotonResponse>(apiUrl, {
                 params: {
                     q: searchQuery,
                     limit: 5,
-                    lang: 'en', // or 'pt' if preferred, but Photon support varies
+                    lang: 'en', // or 'pt' if preferred
                 }
             });
             setResults(response.data.features);

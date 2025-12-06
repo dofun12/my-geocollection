@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  photon:
+    build:
+      context: ./photon
+      dockerfile: Dockerfile
+    container_name: geocollection-photon
+    ports:
+      - "2322:2322"
+    volumes:
+      - photon_data:/photon/photon_data
+    restart: unless-stopped
+    # Limit resources as import can be heavy
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+
+volumes:
+  photon_data:
+    driver: local

@@ -71,3 +71,5 @@ networks:
 volumes:
   postgres_data:
     driver: local
+  photon_data:
+    driver: local
