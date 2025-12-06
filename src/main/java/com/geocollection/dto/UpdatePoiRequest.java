@@ -1,5 +1,6 @@
 package com.geocollection.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,4 +34,7 @@ public class UpdatePoiRequest {
     private BigDecimal longitude;
 
     private String imageBase64;
+
+    @JsonProperty("isHome")
+    private Boolean isHome;
 }

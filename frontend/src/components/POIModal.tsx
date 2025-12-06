@@ -32,6 +32,7 @@ const POIModal: React.FC<POIModalProps> = ({
     const [longitude, setLongitude] = useState<number | string>('');
     const [imageBase64, setImageBase64] = useState<string>('');
     const [imagePreview, setImagePreview] = useState<string>('');
+    const [isHome, setIsHome] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string>('');
 
@@ -43,6 +44,7 @@ const POIModal: React.FC<POIModalProps> = ({
             setLongitude(poi.longitude);
             setImageBase64(poi.imageBase64 || '');
             setImagePreview(poi.imageBase64 || '');
+            setIsHome(poi.isHome || false);
         } else if (mode === 'create') {
             setTitle('');
             setDescription('');
@@ -50,6 +52,7 @@ const POIModal: React.FC<POIModalProps> = ({
             setLongitude(initialLon ?? '');
             setImageBase64('');
             setImagePreview('');
+            setIsHome(false);
         }
         setError('');
     }, [mode, poi, initialLat, initialLon, isOpen]);
@@ -121,6 +124,7 @@ const POIModal: React.FC<POIModalProps> = ({
                 latitude: lat,
                 longitude: lon,
                 imageBase64: imageBase64 || undefined,
+                isHome: isHome,
             });
             onClose();
         } catch (err: any) {
@@ -283,6 +287,25 @@ const POIModal: React.FC<POIModalProps> = ({
                                 </button>
                             </div>
                         )}
+                    </div>
+
+                    {/* Set as Home Checkbox */}
+                    <div className="border-t border-gray-200 pt-4">
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                            <input
+                                type="checkbox"
+                                checked={isHome}
+                                onChange={(e) => setIsHome(e.target.checked)}
+                                className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                                disabled={isSubmitting}
+                            />
+                            <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition">
+                                🏠 Set as Home Location
+                            </span>
+                        </label>
+                        <p className="text-xs text-gray-500 mt-2 ml-8">
+                            Only one POI can be set as home. Setting this will unset any existing home POI.
+                        </p>
                     </div>
 
                     {/* Action Buttons */}

@@ -35,6 +35,7 @@ export interface UpdatePOIRequest {
     latitude: number;
     longitude: number;
     imageBase64?: string;
+    isHome?: boolean;
 }
 
 /**

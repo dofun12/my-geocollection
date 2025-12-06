@@ -123,11 +123,17 @@ public class PointOfInterestService {
             validateImage(request.getImageBase64());
         }
 
+        // If setting as home, unset other home POIs for this user
+        if (Boolean.TRUE.equals(request.getIsHome())) {
+            unsetAllHomePois(user.getId());
+        }
+
         poi.setTitle(request.getTitle());
         poi.setDescription(request.getDescription());
         poi.setLatitude(request.getLatitude());
         poi.setLongitude(request.getLongitude());
         poi.setImageBase64(request.getImageBase64());
+        poi.setIsHome(request.getIsHome());
 
         PointOfInterest updatedPoi = repository.save(poi);
         log.info("POI updated successfully with ID: {}", updatedPoi.getId());

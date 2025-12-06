@@ -61,6 +61,24 @@ const POIMarker: React.FC<POIMarkerProps> = ({ poi, onEdit, onDelete }) => {
                         </div>
                     )}
 
+                    {/* Home Indicator */}
+                    {poi.isHome && (
+                        <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-700 px-3 py-2 rounded-lg">
+                            <span className="text-lg">🏠</span>
+                            <span className="text-sm font-semibold">Home Location</span>
+                        </div>
+                    )}
+
+                    {/* Distance from Home */}
+                    {!poi.isHome && poi.distanceFromHome !== null && poi.distanceFromHome !== undefined && (
+                        <div className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded-lg">
+                            <span className="text-lg">📏</span>
+                            <span className="text-sm font-semibold">
+                                {poi.distanceFromHome.toFixed(2)} km from home
+                            </span>
+                        </div>
+                    )}
+
                     {/* Coordinates */}
                     <div className="text-xs text-gray-500 font-mono bg-gray-50 p-2 rounded">
                         📍 {poi.latitude.toFixed(6)}, {poi.longitude.toFixed(6)}

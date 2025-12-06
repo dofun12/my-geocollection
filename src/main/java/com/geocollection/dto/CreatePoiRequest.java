@@ -1,5 +1,6 @@
 package com.geocollection.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,5 +35,6 @@ public class CreatePoiRequest {
 
     private String imageBase64;
 
-    private Boolean isHome = false;
+    @JsonProperty("isHome")
+    private Boolean isHome;
 }
