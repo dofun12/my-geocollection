@@ -35,7 +35,6 @@ const POIMarker: React.FC<POIMarkerProps> = ({ poi, onEdit, onDelete }) => {
         <Marker
             position={[poi.latitude, poi.longitude]}
             icon={customIcon}
-            className="custom-poi-marker"
         >
             <Popup maxWidth={300} className="poi-popup">
                 <div className="space-y-3">

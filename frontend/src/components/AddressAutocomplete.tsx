@@ -17,7 +17,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     const [results, setResults] = useState<NominatimResult[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
-    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
+    const [debounceTimeout, setDebounceTimeout] = useState<number | null>(null);
 
     useEffect(() => {
         // Cleanup timeout on unmount
