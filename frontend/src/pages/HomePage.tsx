@@ -69,7 +69,7 @@ export default function HomePage() {
 
     const handleSetAsHome = async (id: number) => {
         try {
-            const updatedPOI = await poiApi.setAsHome(id);
+            await poiApi.setAsHome(id);
             await loadPOIs(); // Reload to get updated distances
         } catch (err: any) {
             alert('Failed to set as home');
@@ -79,7 +79,7 @@ export default function HomePage() {
 
     const handleUnsetAsHome = async (id: number) => {
         try {
-            const updatedPOI = await poiApi.unsetAsHome(id);
+            await poiApi.unsetAsHome(id);
             await loadPOIs(); // Reload to get updated distances
         } catch (err: any) {
             alert('Failed to unset home');

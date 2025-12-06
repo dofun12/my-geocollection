@@ -8,6 +8,8 @@ interface POIMarkerProps {
     poi: POI;
     onEdit: (poi: POI) => void;
     onDelete: (id: number) => void;
+    onSetAsHome: (id: number) => void;
+    onUnsetAsHome: (id: number) => void;
 }
 
 // Create custom marker icon

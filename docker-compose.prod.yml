@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: geocollection-postgres
+    environment:
+      POSTGRES_DB: geocollection
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - geocollection-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: always
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: geocollection-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: geocollection
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      # In production with Nginx proxy, requests come from same origin, but we keep this for safety
+      CORS_ORIGINS: http://localhost,http://127.0.0.1
+    networks:
+      - geocollection-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: always
+
+  # Frontend (Nginx + React)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: geocollection-frontend
+    ports:
+      - "80:80"
+    networks:
+      - geocollection-network
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: always
+
+networks:
+  geocollection-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
