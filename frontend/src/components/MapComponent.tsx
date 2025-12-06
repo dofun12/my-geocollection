@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import type { POI, MapState } from '../types/types';
@@ -9,6 +9,8 @@ interface MapComponentProps {
     onMapClick: (lat: number, lon: number) => void;
     onEditPOI: (poi: POI) => void;
     onDeletePOI: (id: number) => void;
+    onSetAsHome: (id: number) => void;
+    onUnsetAsHome: (id: number) => void;
 }
 
 const MAP_STATE_KEY = 'geocollection_map_state';
@@ -49,6 +51,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
     onMapClick,
     onEditPOI,
     onDeletePOI,
+    onSetAsHome,
+    onUnsetAsHome,
 }) => {
     const [mapState, setMapState] = useState<MapState>(() => {
         // Load initial map state from localStorage
@@ -105,6 +109,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
                         poi={poi}
                         onEdit={onEditPOI}
                         onDelete={onDeletePOI}
+                        onSetAsHome={onSetAsHome}
+                        onUnsetAsHome={onUnsetAsHome}
                     />
                 ))}
             </MapContainer>

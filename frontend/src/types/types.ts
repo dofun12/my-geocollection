@@ -8,6 +8,8 @@ export interface POI {
     latitude: number;
     longitude: number;
     imageBase64?: string;
+    isHome?: boolean;
+    distanceFromHome?: number | null; // Distance in kilometers, null for home POI
     createdAt: string;
     updatedAt: string;
 }
@@ -21,6 +23,7 @@ export interface CreatePOIRequest {
     latitude: number;
     longitude: number;
     imageBase64?: string;
+    isHome?: boolean;
 }
 
 /**

@@ -21,6 +21,8 @@ public class PointOfInterestDTO {
     private BigDecimal latitude;
     private BigDecimal longitude;
     private String imageBase64;
+    private Boolean isHome;
+    private Double distanceFromHome; // Distance in kilometers, null for home POI
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

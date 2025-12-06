@@ -20,6 +20,32 @@ const apiClient = axios.create({
     },
 });
 
+// Request interceptor to add JWT token
+apiClient.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
+
+// Response interceptor to handle 401 unauthorized
+apiClient.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            // Clear auth data and redirect to login
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('auth_user');
+            window.location.href = '/login';
+        }
+        return Promise.reject(error);
+    }
+);
+
 /**
  * POI API service.
  */
@@ -61,6 +87,22 @@ export const poiApi = {
      */
     delete: async (id: number): Promise<void> => {
         await apiClient.delete(`/${id}`);
+    },
+
+    /**
+     * Set a POI as home.
+     */
+    setAsHome: async (id: number): Promise<POI> => {
+        const response = await apiClient.post<POI>(`/${id}/set-home`);
+        return response.data;
+    },
+
+    /**
+     * Unset a POI as home.
+     */
+    unsetAsHome: async (id: number): Promise<POI> => {
+        const response = await apiClient.delete<POI>(`/${id}/unset-home`);
+        return response.data;
     },
 };
 

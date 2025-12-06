@@ -33,4 +33,6 @@ public class CreatePoiRequest {
     private BigDecimal longitude;
 
     private String imageBase64;
+
+    private Boolean isHome = false;
 }

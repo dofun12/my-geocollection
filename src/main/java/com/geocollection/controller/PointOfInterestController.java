@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,19 +32,21 @@ public class PointOfInterestController {
      */
     @PostMapping
     public ResponseEntity<PointOfInterestDTO> createPoi(@Valid @RequestBody CreatePoiRequest request) {
-        log.info("Received request to create POI: {}", request.getTitle());
-        PointOfInterestDTO createdPoi = service.createPoi(request);
+        String username = getAuthenticatedUsername();
+        log.info("Received request to create POI: {} for user: {}", request.getTitle(), username);
+        PointOfInterestDTO createdPoi = service.createPoi(request, username);
         return new ResponseEntity<>(createdPoi, HttpStatus.CREATED);
     }
 
     /**
-     * Get all Points of Interest.
+     * Get all Points of Interest for the authenticated user.
      * GET /api/pois
      */
     @GetMapping
     public ResponseEntity<List<PointOfInterestDTO>> getAllPois() {
-        log.info("Received request to get all POIs");
-        List<PointOfInterestDTO> pois = service.getAllPois();
+        String username = getAuthenticatedUsername();
+        log.info("Received request to get all POIs for user: {}", username);
+        List<PointOfInterestDTO> pois = service.getAllPois(username);
         return ResponseEntity.ok(pois);
     }
 
@@ -52,8 +56,9 @@ public class PointOfInterestController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<PointOfInterestDTO> getPoiById(@PathVariable Long id) {
-        log.info("Received request to get POI with ID: {}", id);
-        PointOfInterestDTO poi = service.getPoiById(id);
+        String username = getAuthenticatedUsername();
+        log.info("Received request to get POI with ID: {} for user: {}", id, username);
+        PointOfInterestDTO poi = service.getPoiById(id, username);
         return ResponseEntity.ok(poi);
     }
 
@@ -65,8 +70,9 @@ public class PointOfInterestController {
     public ResponseEntity<PointOfInterestDTO> updatePoi(
             @PathVariable Long id,
             @Valid @RequestBody UpdatePoiRequest request) {
-        log.info("Received request to update POI with ID: {}", id);
-        PointOfInterestDTO updatedPoi = service.updatePoi(id, request);
+        String username = getAuthenticatedUsername();
+        log.info("Received request to update POI with ID: {} for user: {}", id, username);
+        PointOfInterestDTO updatedPoi = service.updatePoi(id, request, username);
         return ResponseEntity.ok(updatedPoi);
     }
 
@@ -76,8 +82,41 @@ public class PointOfInterestController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePoi(@PathVariable Long id) {
-        log.info("Received request to delete POI with ID: {}", id);
-        service.deletePoi(id);
+        String username = getAuthenticatedUsername();
+        log.info("Received request to delete POI with ID: {} for user: {}", id, username);
+        service.deletePoi(id, username);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Set a POI as home.
+     * POST /api/pois/{id}/set-home
+     */
+    @PostMapping("/{id}/set-home")
+    public ResponseEntity<PointOfInterestDTO> setAsHome(@PathVariable Long id) {
+        String username = getAuthenticatedUsername();
+        log.info("Received request to set POI with ID: {} as home for user: {}", id, username);
+        PointOfInterestDTO poi = service.setAsHome(id, username);
+        return ResponseEntity.ok(poi);
+    }
+
+    /**
+     * Unset a POI as home.
+     * DELETE /api/pois/{id}/unset-home
+     */
+    @DeleteMapping("/{id}/unset-home")
+    public ResponseEntity<PointOfInterestDTO> unsetAsHome(@PathVariable Long id) {
+        String username = getAuthenticatedUsername();
+        log.info("Received request to unset POI with ID: {} as home for user: {}", id, username);
+        PointOfInterestDTO poi = service.unsetAsHome(id, username);
+        return ResponseEntity.ok(poi);
+    }
+
+    /**
+     * Get the authenticated username from Security Context.
+     */
+    private String getAuthenticatedUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 }

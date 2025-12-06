@@ -39,6 +39,13 @@ public class PointOfInterest {
     @Column(columnDefinition = "TEXT")
     private String imageBase64;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(nullable = false)
+    private Boolean isHome = false;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
