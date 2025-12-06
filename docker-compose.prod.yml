@@ -35,7 +35,7 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       # In production with Nginx proxy, requests come from same origin, but we keep this for safety
-      CORS_ORIGINS: http://localhost,http://127.0.0.1
+      CORS_ORIGINS: http://localhost,http://127.0.0.1,https://37582fdc2d80.ngrok-free.app
     networks:
       - geocollection-network
     depends_on:
