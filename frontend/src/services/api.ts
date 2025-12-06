@@ -1,8 +1,5 @@
 import axios from 'axios';
-import type { POI, CreatePOIRequest, UpdatePOIRequest, NominatimResult } from '../types/types';
-
-// Re-export types for convenience
-export type { NominatimResult };
+import type { POI, CreatePOIRequest, UpdatePOIRequest } from '../types/types';
 
 /**
  * Base URL for API requests.
@@ -106,32 +103,7 @@ export const poiApi = {
     },
 };
 
-/**
- * Nominatim Geocoding API for address search.
- */
-export const nominatimApi = {
-    /**
-     * Search for addresses using Nominatim.
-     */
-    search: async (query: string): Promise<NominatimResult[]> => {
-        const response = await axios.get<NominatimResult[]>(
-            'https://nominatim.openstreetmap.org/search',
-            {
-                params: {
-                    q: query,
-                    format: 'json',
-                    addressdetails: 1,
-                    limit: 5,
-                    countrycodes: 'br', // Focus on Brazil for better results
-                },
-                headers: {
-                    'User-Agent': 'MyGeoCollection/1.0', // Required by Nominatim
-                },
-            }
-        );
-        return response.data;
-    },
-};
+// Nominatim API removed in favor of Google Maps Places API
 
 /**
  * Utility function to convert file to Base64.

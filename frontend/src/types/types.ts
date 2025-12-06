@@ -38,27 +38,7 @@ export interface UpdatePOIRequest {
     isHome?: boolean;
 }
 
-/**
- * Nominatim search result from OpenStreetMap.
- */
-export interface NominatimResult {
-    place_id: number;
-    licence: string;
-    osm_type: string;
-    osm_id: number;
-    lat: string;
-    lon: string;
-    display_name: string;
-    address: {
-        road?: string;
-        suburb?: string;
-        city?: string;
-        state?: string;
-        country?: string;
-        postcode?: string;
-    };
-    boundingbox: string[];
-}
+
 
 /**
  * Map state for localStorage persistence.
