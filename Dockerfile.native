@@ -1,0 +1,39 @@
+# Stage 1: Build Native Image
+FROM ghcr.io/graalvm/native-image-community:21 AS build
+WORKDIR /app
+
+# Install Maven
+RUN microdnf install -y maven
+
+# Copy pom.xml and source code
+COPY pom.xml .
+COPY src ./src
+
+# Build native image
+# -Pnative triggers the native profile in Spring Boot parent POM
+# -DskipTests skips tests to speed up build (native tests take a long time)
+RUN mvn -Pnative native:compile -DskipTests
+
+# Stage 2: Runtime
+# Use a minimal base image
+FROM ubuntu:jammy
+WORKDIR /app
+
+# Create non-root user
+RUN groupadd -r spring && useradd -r -g spring spring
+
+# Copy native executable from build stage
+# The executable name defaults to the artifactId (my-geocollection)
+COPY --from=build /app/target/my-geocollection app
+
+# Change ownership
+RUN chown spring:spring app
+
+# Switch to non-root user
+USER spring:spring
+
+# Expose port
+EXPOSE 8080
+
+# Run application
+ENTRYPOINT ["./app"]
