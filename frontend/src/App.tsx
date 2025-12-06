@@ -114,10 +114,14 @@ function App() {
       </header>
 
       {/* Instructions Banner */}
-      <div className="absolute top-20 left-1/2 transform -translate-x-1/2 z-[999] bg-blue-50 border border-blue-200 text-blue-800 px-6 py-3 rounded-lg shadow-lg max-w-xl mx-auto">
-        <p className="text-sm text-center">
-          <strong>💡 Tip:</strong> Click anywhere on the map to add a new POI at that location!
-        </p>
+      <div className="absolute top-20 left-0 right-0 z-[999] pointer-events-none">
+        <div className="max-w-xl mx-auto px-4 pointer-events-auto">
+          <div className="bg-blue-50 border border-blue-200 text-blue-800 px-6 py-3 rounded-lg shadow-lg">
+            <p className="text-sm text-center">
+              <strong>💡 Tip:</strong> Click anywhere on the map to add a new POI at that location!
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Loading Overlay */}
@@ -144,7 +148,7 @@ function App() {
       )}
 
       {/* Map */}
-      <div className="h-full w-full">
+      <div className="h-full w-full relative z-10">
         <MapComponent
           pois={pois}
           onMapClick={handleMapClick}
